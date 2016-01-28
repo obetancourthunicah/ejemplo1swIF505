@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var api = require('./routes/api')();
 
 var app = express();
 
@@ -24,7 +25,27 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+
+app.use('/api', api);
+//app.use('/users', users);
+/* puedo modificar desde aquí */
+
+app.get('/test', function(req,res,next){
+    var renderObject = {};
+    renderObject.NombreCompleto = "Orlando J Betancourth";
+    renderObject.Items = [];
+    renderObject.Items.push({itemLabel:"Item 1"});
+    renderObject.Items.push({itemLabel:"Item 2"});
+    renderObject.Items.push({itemLabel:"Item 3"});
+    res.render('test',renderObject);
+
+} );
+
+app.post('/test', function(req, res,next){
+
+});
+
+/*Hasta aqui  */
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
